@@ -1,0 +1,18 @@
+{
+  "name": "THE LAST IDENTITY \u2014 Case Intelligence",
+  "short_name": "Last Identity",
+  "description": "Educational prototype for missing-person and unidentified-case coordination.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f3e8",
+  "theme_color": "#6d1831",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

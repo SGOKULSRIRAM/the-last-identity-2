@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#6d1831">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <title>The Last Identity | Case Intelligence</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <section id="login">
+    <div class="login-showcase">
+      <div class="showcase-mark"><div class="mark">LI</div><div><strong>THE LAST IDENTITY</strong><span>CASE INTELLIGENCE</span></div></div>
+      <div class="showcase-copy">
+        <div class="kicker">Educational investigative demonstrator</div>
+        <h1>Every identity deserves to be known.</h1>
+        <p>A considered interface for coordinating fictional missing-person and unidentified-case records.</p>
+      </div>
+    </div>
+    <div class="login-panel">
+      <div class="login-card">
+        <h2>Workspace access</h2>
+        <p>Choose a demonstration role to enter the case environment.</p>
+        <label for="loginRole">Access role</label>
+        <select id="loginRole"><option>Police Officer</option><option>Forensic Expert</option><option>System Administrator</option></select>
+        <label for="loginCode">Demo access code</label>
+        <input id="loginCode" type="password" value="IDENTITY2026" autocomplete="off">
+        <div class="presets">
+          <button class="btn ghost small" onclick="setRole('Police Officer')">Police</button>
+          <button class="btn ghost small" onclick="setRole('Forensic Expert')">Forensic</button>
+          <button class="btn ghost small" onclick="setRole('System Administrator')">Administrator</button>
+        </div>
+        <button class="btn primary" style="width:100%" onclick="login()">Authenticate access</button>
+        <div class="login-foot">DEMO ONLY · Fictional records · No real biometric or government connection</div>
+      </div>
+    </div>
+  </section>
+
+  <div id="app">
+    <aside class="sidebar">
+      <div class="side-brand"><h1>The Last Identity</h1><div class="sub">CASE INTELLIGENCE</div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="active" data-page="dashboard"><span class="ico">01</span><span>Overview</span></button>
+        <button data-page="missing"><span class="ico">02</span><span>Missing Persons</span></button>
+        <button data-page="unidentified"><span class="ico">03</span><span>Unidentified Cases</span></button>
+        <button data-page="matches"><span class="ico">04</span><span>Possible Matches</span></button>
+        <button data-page="review"><span class="ico">05</span><span>Forensic Review</span></button>
+        <button data-page="notifications"><span class="ico">06</span><span>Notifications</span></button>
+        <button data-page="activity"><span class="ico">07</span><span>Activity Log</span></button>
+      </nav>
+      <div class="side-bottom">ENVIRONMENT<br><b style="color:#e5c7d0">Demonstration mode</b></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><div class="eyebrow">CASE INTELLIGENCE / <span id="crumb">OVERVIEW</span></div><h2 id="pageTitle">Command Overview</h2></div>
+        <div class="user-chip"><span class="user-role" id="userRole">Police Officer</span><button class="btn ghost small" onclick="logout()">Sign out</button></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome">
+          <div><div class="eyebrow">COMMAND OVERVIEW</div><h1>The Last Identity</h1><p>Coordinate case records, review illustrative leads, and preserve a clear human-verification workflow.</p></div>
+          <div class="welcome-seal">SYNTHETIC<br>DATA ONLY</div>
+        </div>
+        <div class="notice">Demonstration environment: all names and records are fictional. Similarity scores are illustrative and never constitute identity confirmation.</div>
+        <div class="grid stats">
+          <div class="stat"><div class="label">MISSING PERSONS</div><div class="num" id="statMissing">3</div><div class="hint">Registered demo records</div></div>
+          <div class="stat"><div class="label">UNIDENTIFIED CASES</div><div class="num" id="statCases">2</div><div class="hint">Awaiting investigation</div></div>
+          <div class="stat"><div class="label">POSSIBLE LEADS</div><div class="num" id="statMatches">2</div><div class="hint">Require review</div></div>
+          <div class="stat"><div class="label">PENDING REVIEWS</div><div class="num" id="statReviews">2</div><div class="hint">Human decision required</div></div>
+        </div>
+        <div class="grid two">
+          <div class="panel"><div class="panel-head"><h3>Recent activity</h3><span class="tag">LOCAL DEMO</span></div><div class="activity" id="dashActivity"></div></div>
+          <div class="panel"><div class="panel-head"><h3>Investigation workflow</h3></div>
+            <div class="workflow-item"><div class="workflow-number">01</div><div><strong>Review registry</strong><span>Search existing case information.</span></div></div>
+            <div class="workflow-item"><div class="workflow-number">02</div><div><strong>Compare leads</strong><span>Assess illustrative metadata overlaps.</span></div></div>
+            <div class="workflow-item"><div class="workflow-number">03</div><div><strong>Verify manually</strong><span>Record an authorized human decision.</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-missing">
+        <div class="panel"><div class="panel-head"><h3>Missing Persons Registry</h3><button class="btn primary small" onclick="showForm('missing')">Add record</button></div>
+          <div class="toolbar"><input id="missingSearch" placeholder="Search name, ID or location..." oninput="renderMissing()"></div>
+          <div class="table-wrap"><table><thead><tr><th>CASE ID</th><th>PERSON</th><th>AGE</th><th>LAST SEEN</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="missingRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-unidentified">
+        <div class="panel"><div class="panel-head"><h3>Unidentified Person Cases</h3><button class="btn primary small" onclick="showForm('case')">Add case</button></div>
+          <div class="toolbar"><input id="caseSearch" placeholder="Search case ID or location..." oninput="renderCases()"></div>
+          <div class="table-wrap"><table><thead><tr><th>CASE ID</th><th>FOUND AT</th><th>DATE</th><th>EST. AGE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="caseRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-matches">
+        <div class="notice">Illustrative scores are based only on fictional age and location overlap. They are not biometric results or evidence.</div>
+        <div class="panel"><div class="panel-head"><h3>Possible Match Leads</h3><span class="tag amber">HUMAN REVIEW REQUIRED</span></div><div class="grid record-grid" id="matchCards"></div></div>
+      </section>
+
+      <section class="page" id="page-review">
+        <div class="panel"><div class="panel-head"><h3>Forensic Review Queue</h3><span class="tag">AUTHORIZED REVIEW</span></div>
+          <div class="notice">This prototype does not process real forensic, fingerprint, eye, DNA or biometric data.</div>
+          <div class="table-wrap"><table><thead><tr><th>LEAD</th><th>REVIEW TYPE</th><th>ASSIGNED TO</th><th>STATUS</th><th>DECISION</th></tr></thead><tbody id="reviewRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-notifications">
+        <div class="panel"><div class="panel-head"><h3>Family Notification Register</h3><button class="btn primary small" onclick="showForm('notification')">Log notification</button></div>
+          <div class="notice">Family contact in a real process must occur only after identity is formally confirmed by authorized officials.</div>
+          <div class="table-wrap"><table><thead><tr><th>REFERENCE</th><th>CASE</th><th>CHANNEL</th><th>RECORDED BY</th><th>STATUS</th></tr></thead><tbody id="notificationRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-activity">
+        <div class="panel"><div class="panel-head"><h3>System Activity Log</h3><span class="tag">LOCAL DEMO LOG</span></div><div class="activity" id="allActivity"></div></div>
+      </section>
+      <div class="footer-note">The Last Identity · Educational prototype · Not for operational or real-world investigative decisions.</div>
+    </main>
+  </div>
+
+  <div id="modal" class="hidden modal-backdrop">
+    <div class="panel modal-card">
+      <div class="panel-head"><h3 id="modalTitle">Add record</h3><button class="btn ghost small" onclick="closeForm()">Close</button></div>
+      <form id="recordForm" onsubmit="saveForm(event)"><div id="formFields" class="form-grid"></div><div class="form-actions"><button class="btn primary" type="submit">Save record</button><button class="btn ghost" type="button" onclick="closeForm()">Cancel</button></div></form>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
